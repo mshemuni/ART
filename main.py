@@ -4,7 +4,7 @@ import logging
 from datetime import datetime
 import os
 from telegram import __version__ as TG_VER
-from mesa import auto_parse, now, Time, Object, Weather
+from art import auto_parse, now, Time, Object, Weather
 from astropy.coordinates.name_resolve import NameResolveError
 from matplotlib import pyplot as plt
 import matplotlib.dates as mdates
@@ -86,8 +86,9 @@ def saver(update, operation, inputs, output):
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Start the conversation and ask user for input."""
+    variable_reset(context)
     await update.message.reply_text(
-        "Hi! It is Mesa. How can I help you?",
+        "Hi! It is MYRaf. How can I help you?",
         reply_markup=markup,
     )
 

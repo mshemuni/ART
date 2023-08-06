@@ -5,6 +5,8 @@ Write a read me file.
 
 This is the code for ART (myrAf telegRam boT)
 
+![MYRaf](myraf_telegram.gif)
+
 ## Usage
 One can easily use this code for themselvs. In order to run the code:
 

@@ -30,7 +30,7 @@ from telegram.ext import (
     filters,
 )
 
-from peewee import Model, SqliteDatabase, CharField, DateField, DateTimeField, TextField
+from peewee import Model, SqliteDatabase, CharField, DateTimeField, TextField
 
 db = SqliteDatabase('requests.db')
 
@@ -65,6 +65,14 @@ reply_keyboard = [
 markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
 
 
+def variable_reset(context):
+    if "tm" in context.user_data:
+        del context.user_data["tm"]
+
+    if "loc" in context.user_data:
+        del context.user_data["loc"]
+
+
 def saver(update, operation, inputs, output):
     record = Request(
         created_on=datetime.utcnow(),
@@ -87,6 +95,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
 async def weather(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    variable_reset(context)
     await update.message.reply_text(
         "Give me a location (Latitude ,Longitude): You can share your `location`\n"
         "write cancel to cancel",
@@ -158,6 +167,7 @@ async def weather_get_location(update: Update, context: ContextTypes.DEFAULT_TYP
 
 
 async def visibility(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    variable_reset(context)
     await update.message.reply_text(
         "First give me datetime: You can write `now`\n"
         "write cancel to cancel",
@@ -299,6 +309,7 @@ async def visibility_get_sky(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
 
 async def e2h(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    variable_reset(context)
     await update.message.reply_text(
         "First give me datetime: You can write `now`\n"
         "write cancel to cancel",
@@ -442,6 +453,7 @@ async def e2h_get_sky(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
 
 async def rise_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    variable_reset(context)
     await update.message.reply_text(
         "First give me datetime: You can write `now`\n"
         "write cancel to cancel",
@@ -586,6 +598,7 @@ async def rise_set_get_sky(update: Update, context: ContextTypes.DEFAULT_TYPE) -
 
 
 async def moon(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    variable_reset(context)
     await update.message.reply_text(
         "First give me datetime: You can write `now`\n"
         "write cancel to cancel",
@@ -679,6 +692,7 @@ async def moon_get_location(update: Update, context: ContextTypes.DEFAULT_TYPE) 
 
 
 async def twilight(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    variable_reset(context)
     await update.message.reply_text(
         "First give me datetime: You can write `now`\n"
         "write cancel to cancel",
@@ -771,6 +785,7 @@ async def twilight_get_location(update: Update, context: ContextTypes.DEFAULT_TY
 
 
 async def sidereal(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    variable_reset(context)
     await update.message.reply_text(
         "First give me datetime: You can write `now`\n"
         "write cancel to cancel",
@@ -861,6 +876,7 @@ async def sidereal_get_location_calc(update: Update, context: ContextTypes.DEFAU
 
 
 async def jd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    variable_reset(context)
     await update.message.reply_text(
         f"I'll need a datetime value. You can write `now`\n"
         "write cancel to cancel",
@@ -886,7 +902,6 @@ async def jd_calc(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         await update.message.reply_html(
             f"<b>JD:</b> <pre>{round(jd['jd'], 10)}</pre>\n"
             f"<b>MJD:</b> <pre>{round(jd['mjd'], 10)}</pre>",
-            # f"<pre>{tabulate(data, tablefmt='simple_grid', floatfmt=('.10f', '.10f'))}</pre>",
             reply_markup=ReplyKeyboardRemove(),
         )
 

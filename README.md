@@ -11,7 +11,7 @@ This is the code for ART (myrAf telegRam boT)
 One can easily use this code for themselvs. In order to run the code:
 
 1. Get the code.
-   - ```git clone https://github.com/mshemuni/mesa.git```
+   - ```git clone https://github.com/mshemuni/ART.git```
 
 2. Install all requirements
    - ```pip install -r requirements.txt```
